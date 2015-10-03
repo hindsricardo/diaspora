@@ -1,0 +1,14 @@
+{
+  "name": "cordova-plugin-whitelist",
+  "homepage": "https://github.com/apache/cordova-plugin-whitelist",
+  "_release": "be33970b41",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "be33970b411c4b066cc52a462f60fe5448a89f98"
+  },
+  "_source": "https://github.com/apache/cordova-plugin-whitelist.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/apache/cordova-plugin-whitelist.git",
+  "_direct": true
+}

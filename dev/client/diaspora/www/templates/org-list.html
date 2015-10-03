@@ -1,0 +1,54 @@
+<ion-header-bar class="bar bar-header bar-positive">
+        <div class="buttons button-clear">
+            <button class="button" ng-click="newTask()">New</button>
+        </div>
+       <h1 class="title">My List</h1>
+       <button class="button button-clear" ng-click="logout()">Logout</button>
+</ion-header-bar>
+<ion-content class="has-header padding" has-tabs="true" on-refresh="onRefresh()">
+   <ion-refresher ng-hide="noData" on-refresh="doRefresh('1')"></ion-refresher>
+   <div class="list card" ng-repeat="item in list| orderBy:'- created'" >
+       <div class="item list-group-item-heading">
+           <p class="actions padding">
+               <i class="ion-edit icon-actions margin" ng-click="editTask(item._id)"></i>
+           </p>
+           <h2>
+               {{item.type}}
+           </h2>
+           <p>
+               {{ item.title}}
+           </p>
+       </div>
+       <div class="item item-body">
+           <p ng-click="moreDesc(reveal[$index], $index)">
+               <i class="icon ion-arrow-right-b" ng-if="reveal[$index] == false || !reveal[$index] && item.description"></i>
+               <i class="icon ion-arrow-down-b" ng-if="reveal[$index] == true && item.description"></i>
+               {{descriptLen(item.description, reveal[$index])}}
+           </p>
+           <p>
+               <a href="#" class="subdued">{{item.booked.length}} Reach Outs</a>
+           </p>
+       </div>
+       <div class="item tabs tabs-secondary tabs-icon-left">
+           <a class="tab-item" href="http://maps.google.com/?q={{item.location}}" target="_blank">
+               <i class="icon ion-location"></i>
+               {{item.location}}
+           </a>
+           <!--<a class="tab-item" href="#">
+               <i class="icon ion-chatbox"></i>
+               Advise
+           </a>-->
+           <!--<a class="tab-item" href="#">
+               <i class="icon ion-share"></i>
+               Share
+           </a>-->
+       </div>
+   </div>
+   <div class="card" >
+      <div class="item item-text-wrap" ng-show="noData">
+         <span>
+         No Items in your bucket List. Click  <a href="javascript:" ng-click="newTask()">Here</a> and create one
+         </span>
+      </div>
+   </div>
+</ion-content>
