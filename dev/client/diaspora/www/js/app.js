@@ -1,5 +1,6 @@
-angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.services','ngCordova'])
-    .run(function ($ionicPlatform) {
+angular.module('diaspora', ['ionic', 'diaspora.controllers', 'diaspora.services','ngCordova', 'ngOpenFB'])
+    .run(function ($ionicPlatform, ngFB) {
+        ngFB.init({appId: '1472397729734860'});
         $ionicPlatform.ready(function () {
             if (window.StatusBar) {
                 // org.apache.cordova.statusbar required
@@ -23,15 +24,6 @@ angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.ser
                     }
                 }
             })
-            .state('auth.signinOrg', {
-                url: '/signinOrg',
-                views: {
-                    'auth-signinOrg': {
-                        templateUrl: 'templates/auth-signinOrg.html',
-                        controller: 'SignInCtrl'
-                    }
-                }
-            })
             .state('auth.signup', {
                 url: '/signup',
                 views: {
@@ -41,95 +33,45 @@ angular.module('bucketList', ['ionic', 'bucketList.controllers', 'bucketList.ser
                     }
                 }
             })
-            .state('auth.signupOrg', {
-                url: '/signupOrg',
-                views: {
-                    'auth-signupOrg': {
-                        templateUrl: 'templates/auth-signupOrg.html',
-                        controller: 'SignUpCtrl'
-                    }
-                }
-            })
-            .state('bucket', {
-                url: "/bucket",
+            .state('diaspora', {
+                url: "/diaspora",
                 abstract: true,
                 templateUrl: "templates/bucket.html"
             })
 
-            .state('bucket.list', {
+            .state('diaspora.list', {
                 url: '/list',
                 views: {
-                    'bucket-list': {
+                    'diaspora-list': {
                         templateUrl: 'templates/bucket-list.html',
                         controller: 'allListCtrl'
                     }
                 }
             })
-            .state('bucket.reserved', {
+            .state('diaspora.reserved', {
                 url: '/reserved',
                 views: {
-                    'bucket-reserved': {
+                    'diaspora-reserved': {
                         templateUrl: 'templates/bucket-reserved.html',
                         controller: 'reservedCtrl'
                     }
                 }
             })
-            .state('bucket.myprofile', {
+            .state('diaspora.myprofile', {
                 url: '/myprofile',
                 views: {
-                    'bucket-profile': {
+                    'diaspora-profile': {
                         templateUrl: 'templates/bucket-myprofile.html',
                         controller: 'myProfileCtrl'
                     }
                 }
             })
-            .state('bucket.edit', {
+            .state('diaspora.edit', {
                 url: '/edit',
                 views: {
-                    'bucket-edit': {
+                    'diaspora-edit': {
                         templateUrl: 'templates/bucket-edit.html',
                         controller: 'editProfileCtrl'
-                    }
-                }
-            })
-            .state('org', {
-                url: "/org",
-                abstract: true,
-                templateUrl: "templates/org.html"
-            })
-            .state('org.list', {
-                url: '/list',
-                views: {
-                    'org-list': {
-                        templateUrl: 'templates/org-list.html',
-                        controller: 'myListCtrl'
-                    }
-                }
-            })
-            .state('org.edit', {
-                url: '/edit',
-                views: {
-                    'org-edit': {
-                        templateUrl: 'templates/org-edit.html',
-                        controller: 'completedCtrl'
-                    }
-                }
-            })
-            .state('org.myprofile', {
-                url: '/orgmyprofile',
-                views: {
-                    'org-profile': {
-                        templateUrl: 'templates/org-myprofile.html',
-                        controller: 'orgProfileCtrl'
-                    }
-                }
-            })
-            .state('org.profileEdit', {
-                url: '/orgedit',
-                views: {
-                    'org-profileEdit': {
-                        templateUrl: 'templates/org-profileEdit.html',
-                        controller: 'orgProfileCtrl'
                     }
                 }
             })

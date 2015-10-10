@@ -1,7 +1,39 @@
-angular.module('bucketList.controllers', ['bucketList.services'])
+angular.module('diaspora.controllers', ['diaspora.services', 'ngOpenFB'])
 
-.controller('SignInCtrl',['$rootScope', '$scope', 'API', '$window', function ($rootScope, $scope, API, $window) {
-    // if the user is already logged in, take him to his bucketlist
+.controller('SignInCtrl',['$rootScope', '$scope', 'API', '$window', 'ngFB', function ($rootScope, $scope, API, $window, ngFB) {
+    // if the user is already logged in, take him to his diaspora
+    $scope.fbLogin = function () {
+        ngFB.login({scope: 'email,publish_actions'}).then(
+            function (response) {
+                if (response.status === 'connected') {
+                    console.log('Facebook login succeeded');
+                    ngFB.api({
+                        path: '/me',
+                        params: {fields: 'id,name'}
+                    }).then(
+                        function (user) {
+                            API.signup({
+                                user: user
+                            }).success(function (data) {
+                                $rootScope.hide();
+                                $rootScope.setToken(user.email); // create a session
+                                $window.location.href = ('#/diaspora/list');
+                            }).error(function (error) {
+                                $rootScope.hide();
+                                $rootScope.notify("Invalid Username or password");
+                            });
+                        },
+                        function (error) {
+                            alert('Facebook error: ' + error.error_description);
+                        });
+                    $scope.closeLogin();
+                } else {
+                    alert('Facebook login failed');
+                }
+            });
+    };
+
+
     if ($rootScope.isSessionActive()) {
         $window.location.href = ('#/bucket/list');
     }

@@ -1,6 +1,6 @@
-angular.module('bucketList.services', [])
+angular.module('diaspora.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
-       var base = "http://hourhive.herokuapp.com";
+       var base = "http://diaspora1.herokuapp.com";
         $rootScope.show = function (text) {
             $rootScope.loading = $ionicLoading.show({
                 content: text ? text : 'Loading',
@@ -34,10 +34,6 @@ angular.module('bucketList.services', [])
                 $rootScope.$broadcast('fetchAll');
             else if(tab == 2)
                 $rootScope.$broadcast('fetchMy');
-            else if(tab == 3)
-                $rootScope.$broadcast('fetchOrg');
-            else if(tab == 4)
-                $rootScope.$broadcast('fetchActivity');
             
             $rootScope.$broadcast('scroll.refreshComplete');
         };
@@ -70,56 +66,30 @@ angular.module('bucketList.services', [])
 
 
         return {
-            signin: function (form) {
-                return $http.post(base+'/api/v1/bucketList/auth/login', form);
-
-            },
-            signinStaff: function (form) {
-                return $http.post(base+'/api/v1/bucketList/org/auth/login', form);
-
-            },
             signup: function (form) {
-                return $http.post(base+'/api/v1/bucketList/auth/register', form);
-
-            },
-            signupOrg: function (form) {
-                return $http.post(base+'/api/v1/bucketList/org/auth/register', form);
+                return $http.post(base+'/api/v1/diaspora/auth/register', form);
 
             },
             getAll: function (session) {
-                return $http.get(base+'/api/v1/bucketList/data/list', {
+                return $http.get(base+'/api/v1/diaspora/data/list', {
                     method: 'GET',
                     params: {
                         token: session
                     }
                 });
             },
-            getYourList: function(session){
-                return $http.get(base+'/api/v1/bucketList/org/data/list',{
-                    method: 'GET',
-                    params: {
-                        token: session
-                    }
-                })
-            },
+
             getOne: function (id, email) {
-                return $http.get(base+'/api/v1/bucketList/data/item/' + id, {
+                return $http.get(base+'/api/v1/diaspora/data/item/' + id, {
                     method: 'GET',
                     params: {
                         token: email
                     }
                 });
             },
-            getOneOrg: function (id, email) {
-                return $http.get(base+'/api/v1/bucketList/data/item/org/' + id, {
-                    method: 'GET',
-                    params: {
-                        token: email
-                    }
-                });
-            },
+
             saveItem: function (form, email) {
-                return $http.post(base+'/api/v1/bucketList/data/item', form, {
+                return $http.post(base+'/api/v1/diaspora/data/item', form, {
                     method: 'POST',
                     params: {
                         token: email
@@ -127,7 +97,7 @@ angular.module('bucketList.services', [])
                 });
             },
             putItem: function (id, form, email) {
-                return $http.put(base+'/api/v1/bucketList/data/item/update/' + id, form, {
+                return $http.put(base+'/api/v1/diaspora/data/item/update/' + id, form, {
                     method: 'PUT',
                     params: {
                         token: email
@@ -135,7 +105,7 @@ angular.module('bucketList.services', [])
                 });
             },
             bookItem: function (id, form, email) {
-                return $http.put(base+'/api/v1/bucketList/data/item/book/' + id, form, {
+                return $http.put(base+'/api/v1/diaspora/data/item/book/' + id, form, {
                     method: 'PUT',
                     params: {
                         token: email,
@@ -144,7 +114,7 @@ angular.module('bucketList.services', [])
                 });
             },
             deleteItem: function (id, email) {
-                return $http.delete(base+'/api/v1/bucketList/data/item/' + id, {
+                return $http.delete(base+'/api/v1/diaspora/data/item/' + id, {
                     method: 'DELETE',
                     params: {
                         token: email
@@ -152,40 +122,15 @@ angular.module('bucketList.services', [])
                 });
             },
             getappUser: function (session) {
-                return $http.get(base+'/api/v1/bucketList/data/user', {
+                return $http.get(base+'/api/v1/diaspora/data/user', {
                     method: 'GET',
                     params: {
                         token: session
-                    }
-                })
-            },
-            getappOrg: function (session) {
-                return $http.get(base+'/api/v1/bucketList/data/org', {
-                    method: 'GET',
-                    params: {
-                        token: session
-                    }
-                })
-            },
-            putappOrg: function (id, form, token) {
-                return $http.put(base+'/api/v1/bucketList/data/org/'+ id, form, {
-                    method: 'PUT',
-                    params: {
-                        token: token
-                    }
-                })
-            },
-            updateStaff: function (form, token) {
-                return $http.post(base+'/api/v1/bucketList/data/org/add', form,  {
-                    method: 'POST',
-                    params: {
-                        token: token,
-                        form: form
                     }
                 })
             },
             getActivity: function (session) {
-                return $http.get(base+'/api/v1/bucketList/data/activity', {
+                return $http.get(base+'/api/v1/diaspora/data/activity', {
                     method: 'GET',
                     params: {
                         token: session
